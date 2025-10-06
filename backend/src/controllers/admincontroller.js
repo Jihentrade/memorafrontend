@@ -1,7 +1,7 @@
 const adminService = require("../services/adminservices");
 const adminModel = require("../models/adminmodel");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { sendPasswordResetEmail } = require("../../src/utils/email");
 const catchAsync = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);

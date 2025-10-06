@@ -32,26 +32,6 @@ app.use(express.json());
 // Middleware CORS amélioré
 app.use(corsMiddleware);
 
-// Middleware CORS manuel pour gérer les requêtes preflight
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-
-  if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
-
 //2-*******************************CONNECTE THE DATABASE*********************
 
 connectDB();
