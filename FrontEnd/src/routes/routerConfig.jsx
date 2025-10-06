@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Accueil from "../pages/Accueil";
 import Dropzone from "../pages/Dropzone";
-
 import ProductPreview from "../pages/ProductPreview";
 import AccueilClient from "../components/AccueilClient/AccueilClient";
 import Contactus from "../components/ContactUs/Contactus";
@@ -16,6 +15,8 @@ const RouterConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
+      
+    
         <Route path="/" element={<Accueil />} />
         <Route path="/dashboardAdmin" element={<Dashboard />} />
         <Route path="/commandes" element={<CommandesAdmin />} />
