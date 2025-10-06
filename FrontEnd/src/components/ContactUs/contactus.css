@@ -1,0 +1,40 @@
+/* Login.css */
+
+.login-container {
+  height: 75vh;
+  /* margin-top: 50px; */
+}
+
+.login-box {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.login-form {
+  margin-bottom: 20px;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-link a {
+  text-decoration: none;
+  color: #597e52;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .login-title {
+    font-size: 1.1em;
+  }
+}

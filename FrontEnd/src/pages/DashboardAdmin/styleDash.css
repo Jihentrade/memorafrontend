@@ -1,0 +1,343 @@
+/* Reset et variables CSS */
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #3b82f6;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --dark-color: #1f2937;
+  --light-color: #f8fafc;
+  --border-radius: 12px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container principal */
+.g-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* Container du dashboard */
+.containerDash {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Cartes de statistiques */
+.card-stat {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 32px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  transform: scaleX(0);
+  transition: var(--transition);
+}
+
+.card-stat:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-stat:hover::before {
+  transform: scaleX(1);
+}
+
+/* En-tête des cartes */
+.card-title-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-title-card-stat img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  transition: var(--transition);
+}
+
+.card-stat:hover .card-title-card-stat img {
+  transform: scale(1.1);
+}
+
+/* Titre des cartes */
+.title-nl-style {
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  margin: 0;
+}
+
+/* Nombre/statistique */
+.nbr-nl-style {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin: 16px 0;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Boutons d'accès */
+.btn-card-stat {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-card-stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: var(--transition);
+}
+
+.btn-card-stat:hover::before {
+  left: 100%;
+}
+
+.btn-card-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+/* Animations d'entrée */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-stat {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.card-stat:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.card-stat:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.card-stat:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.card-stat:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .containerDash {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .card-stat {
+    padding: 24px 20px;
+  }
+
+  .nbr-nl-style {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .g-container {
+    padding: 16px;
+  }
+
+  .card-stat {
+    padding: 20px 16px;
+  }
+
+  .card-title-card-stat {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .nbr-nl-style {
+    font-size: 24px;
+  }
+}
+
+/* Effet de brillance au survol */
+.card-stat::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: var(--transition);
+}
+
+.card-stat:hover::after {
+  left: 100%;
+}
+
+/* Styles pour les icônes */
+.card-title-card-stat img {
+  transition: var(--transition);
+}
+
+.card-stat:hover .card-title-card-stat img {
+  transform: rotate(5deg) scale(1.1);
+}
+
+/* Effet de pulsation pour les statistiques importantes */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.nbr-nl-style {
+  animation: pulse 2s infinite;
+}
+
+/* Styles pour le titre principal */
+.dashboard-title {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Styles pour les sous-titres */
+.dashboard-subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+/* Container pour les graphiques (si ajoutés plus tard) */
+.chart-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Styles pour les notifications ou badges */
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--danger-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}

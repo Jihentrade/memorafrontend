@@ -1,0 +1,35 @@
+.product-preview-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.images-column {
+  flex: 1;
+}
+
+.info-column {
+  flex: 1;
+}
+
+.image-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+}
+
+.crop-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}

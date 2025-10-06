@@ -1,0 +1,24 @@
+/* Responsive pour les images et vidéos de la grille ThreeByTwoGrid */
+.threebytwogrid-media {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 200px !important;
+  max-height: 250px !important;
+  object-fit: cover !important;
+}
+
+/* Responsive pour les appareils mobiles */
+@media (max-width: 600px) {
+  .threebytwogrid-media {
+    min-height: 180px !important;
+    max-height: 220px !important;
+  }
+}
+
+/* Responsive pour les très petits écrans */
+@media (max-width: 480px) {
+  .threebytwogrid-media {
+    min-height: 160px !important;
+    max-height: 200px !important;
+  }
+}

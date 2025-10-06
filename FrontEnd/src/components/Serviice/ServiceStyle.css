@@ -1,0 +1,28 @@
+.box {
+  padding: 16px;
+  text-align: center;
+  color: #333;
+}
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+.coloredBox1 {
+  padding: 16px;
+  text-align: center;
+  background-color: #ffffec;
+  height: "100%";
+}
+.coloredBox2 {
+  padding: 16px;
+  text-align: center;
+  background-color: #f1e4c3;
+  height: "100%";
+}
+.coloredBox3 {
+  padding: 16px;
+  text-align: center;
+  background-color: #c6a969;
+  height: "100%";
+}

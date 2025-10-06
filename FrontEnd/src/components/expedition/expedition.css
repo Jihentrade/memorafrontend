@@ -1,0 +1,30 @@
+.expedition-container {
+  padding: 20px;
+}
+
+.expedition-box {
+  /* background-color: #ffffec; */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 10%;
+}
+
+.expedition-title {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #597e52;
+}
+
+.expedition-content {
+  margin-top: 30px;
+}
+
+.expedition-content h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.expedition-content p {
+  margin-bottom: 10px;
+}
