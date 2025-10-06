@@ -191,7 +191,7 @@ const FridgePreview = () => {
               letterSpacing: 1,
             }}
           >
-            12,49 €
+            45,000 Dt
           </Typography>
           <Typography
             variant="body1"
