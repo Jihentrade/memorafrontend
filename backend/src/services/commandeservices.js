@@ -11,7 +11,7 @@ const createCommande = async (commandeData) => {
 async function findAll() {
   const commandes = await commandeModel
     .find()
-    .populate("client", "nom prenom email telephone adresse");
+    .populate("client", "name lastname phone address");
   return commandes;
 }
 //*************************************************************************** */
@@ -19,7 +19,7 @@ async function findAll() {
 const searchCommande = async (id) => {
   const commandes = await commandeModel
     .findOne({ _id: id })
-    .populate("client", "nom prenom email telephone adresse");
+    .populate("client", "name lastname phone address");
 
   return commandes;
 };

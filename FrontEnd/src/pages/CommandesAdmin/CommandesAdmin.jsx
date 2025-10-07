@@ -17,6 +17,7 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
+import { BASE_URL } from "../../constants/api";
 import {
   Search as SearchIcon,
   Visibility as ViewIcon,
@@ -119,9 +120,13 @@ const CommandesAdmin = () => {
 
   const checkBackendServer = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:4001/commande/findAllCommande"
-      );
+      const BASE_URL =
+        process.env.NODE_ENV === "production"
+          ? "https://memoraa.onrender.com/"
+          : "http://localhost:4001/";
+
+      const response = await fetch(`${BASE_URL}commande/findAllCommande`);
+
       console.log("Backend server status:", response.status);
       return response.ok;
     } catch (error) {
@@ -130,12 +135,25 @@ const CommandesAdmin = () => {
     }
   };
 
+  // Helper pour construire l'URL correcte de l'image
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "";
+    // Si le chemin commence par "uploads/", l'utiliser tel quel
+    // Sinon, ajouter "uploads/" au début
+    const path = imagePath.startsWith("uploads/")
+      ? imagePath
+      : `uploads/${imagePath}`;
+    // Enlever le slash final de BASE_URL s'il existe pour éviter les doubles slashes
+    const baseUrl = BASE_URL.endsWith("/") ? BASE_URL.slice(0, -1) : BASE_URL;
+    return `${baseUrl}/${path}`;
+  };
+
   const openImageInNewTab = (imagePath, index) => {
     try {
       console.log("Ouverture de l'image dans un nouvel onglet:", imagePath);
 
       // Construire l'URL complète
-      const imageUrl = `http://localhost:4001/${imagePath}`;
+      const imageUrl = getImageUrl(imagePath);
       console.log("URL complète:", imageUrl);
 
       // Nom du fichier basé sur la commande et l'index
@@ -381,16 +399,15 @@ const CommandesAdmin = () => {
                     {commande.client && (
                       <Box sx={{ mb: 2 }}>
                         <Typography variant="body2" color="text.secondary">
-                          <strong>Client:</strong> {commande.client.prenom}{" "}
-                          {commande.client.nom}
+                          <strong>Client:</strong> {commande.client.name}{" "}
+                          {commande.client.lastname}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          <strong>Email:</strong> {commande.client.email}
+                          <strong>Adresse:</strong> {commande.client.address}
                         </Typography>
-                        {commande.client.telephone && (
+                        {commande.client.phone && (
                           <Typography variant="body2" color="text.secondary">
-                            <strong>Téléphone:</strong>{" "}
-                            {commande.client.telephone}
+                            <strong>Téléphone:</strong> {commande.client.phone}
                           </Typography>
                         )}
                       </Box>
@@ -482,25 +499,21 @@ const CommandesAdmin = () => {
                   {selectedCommande.client && (
                     <Box sx={{ mb: 3 }}>
                       <Typography>
-                        <strong>Nom:</strong> {selectedCommande.client.nom}
+                        <strong>Nom:</strong> {selectedCommande.client.lastname}
                       </Typography>
                       <Typography>
-                        <strong>Prénom:</strong>{" "}
-                        {selectedCommande.client.prenom}
+                        <strong>Prénom:</strong> {selectedCommande.client.name}
                       </Typography>
-                      <Typography>
-                        <strong>Email:</strong> {selectedCommande.client.email}
-                      </Typography>
-                      {selectedCommande.client.telephone && (
+                      {selectedCommande.client.phone && (
                         <Typography>
                           <strong>Téléphone:</strong>{" "}
-                          {selectedCommande.client.telephone}
+                          {selectedCommande.client.phone}
                         </Typography>
                       )}
-                      {selectedCommande.client.adresse && (
+                      {selectedCommande.client.address && (
                         <Typography>
                           <strong>Adresse:</strong>{" "}
-                          {selectedCommande.client.adresse}
+                          {selectedCommande.client.address}
                         </Typography>
                       )}
                     </Box>
@@ -587,7 +600,7 @@ const CommandesAdmin = () => {
                         >
                           <Box
                             component="img"
-                            src={`http://localhost:4001/${imagePath}`}
+                            src={getImageUrl(imagePath)}
                             alt={`Image ${index + 1}`}
                             sx={{
                               width: "100%",

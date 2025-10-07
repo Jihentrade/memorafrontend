@@ -12,6 +12,12 @@ const createCommande = async (req, res) => {
     }
 
     try {
+      console.log(
+        "📝 Création commande - Fichiers reçus:",
+        req.files?.length || 0
+      );
+      console.log("📝 Body:", req.body);
+
       // Exiger un client existant fourni par le frontend
       const clientId = req.body.client;
       if (!clientId || clientId === "null") {
@@ -20,8 +26,11 @@ const createCommande = async (req, res) => {
         });
       }
 
-      // Images optionnelles
-      const imagePaths = req.files ? req.files.map((file) => file.path) : [];
+      // Images optionnelles - stocker uniquement le nom du fichier
+      const imagePaths = req.files
+        ? req.files.map((file) => file.filename)
+        : [];
+      console.log("🖼️ Images sauvegardées:", imagePaths);
 
       const lastCommande = await CommandeModel.findOne(
         {},
