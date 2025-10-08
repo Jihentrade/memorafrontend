@@ -1,4 +1,5 @@
 const clientModel = require("..//models/clientmodel");
+const CodeReduction = require("../models/codeReduction");
 const { sendDevis } = require("../utils/email");
 const createClient = async (clientData) => {
   const client = new clientModel(clientData);
@@ -44,9 +45,22 @@ const updateClient = async (id, client) => {
 };
 //*************************************************************************** */
 
-async function sendDeviss(name,  photo, message) {
-  await sendDevis(name,  photo, message);
+async function sendDeviss(name, photo, message) {
+  await sendDevis(name, photo, message);
 }
+
+//*********************************************************************** */
+// Vérifier le code promo
+const verifyPromoCode = async (code) => {
+  try {
+    console.log("hnee", code);
+    const promoCode = await CodeReduction.findOne({ code: code, actif: true });
+    console.log("esaber", promoCode);
+    return promoCode;
+  } catch (error) {
+    throw new Error("Erreur lors de la vérification du code promo");
+  }
+};
 
 //*********************************************************************** */
 
@@ -57,4 +71,5 @@ module.exports = {
   updateClient,
   findAll,
   sendDeviss,
+  verifyPromoCode,
 };

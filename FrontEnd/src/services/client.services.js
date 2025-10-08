@@ -1,4 +1,4 @@
-import { axiosPrivate } from "../utils/axios";
+import { axiosPrivate, axiosPublic } from "../utils/axios";
 
 export const createClient = async (clientData) => {
   try {
@@ -49,6 +49,23 @@ export const deleteClient = async (clientId) => {
     );
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyPromoCode = async (code) => {
+  try {
+    console.log("🔍 Vérification du code promo:", code);
+    const response = await axiosPublic.post("/client/verifyPromoCode", {
+      code: code,
+    });
+    console.log("✅ Réponse reçue:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "❌ Erreur lors de la vérification:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };

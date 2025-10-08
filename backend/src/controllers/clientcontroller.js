@@ -1,5 +1,6 @@
 const clientService = require("../services/clientservices");
 const clientModel = require("../models/clientmodel");
+const codeReduction = require("../models/codeReduction");
 //Creation d'un client
 const createClient = async (req, res) => {
   const { name, lastname, phone, address } = req.body;
@@ -133,6 +134,40 @@ const sendDevis = async (req, res) => {
   }
 };
 //*********************************************************************** */
+// Vérifier le code promo
+const verifyPromoCode = async (req, res) => {
+  try {
+    const { code } = req.body;
+    // if (!code) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: "Le code promo est requis",
+    //   });
+    // }
+
+    const promoCode = await clientService.verifyPromoCode(code);
+
+    if (!promoCode) {
+      return res.status(404).json({
+        success: false,
+        error: "Code promo invalide ou expiré",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      reduction: promoCode.reduction,
+      message: `Code promo appliqué avec succès! Réduction de ${promoCode.reduction}%`,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la vérification du code promo:", error);
+    res.status(500).json({
+      success: false,
+      error: "Erreur serveur lors de la vérification du code promo",
+    });
+  }
+};
+//*********************************************************************** */
 module.exports = {
   createClient,
   searchClient,
@@ -141,4 +176,5 @@ module.exports = {
   findAllClients,
   getClient,
   sendDevis,
+  verifyPromoCode,
 };

@@ -8,5 +8,6 @@ route.delete("/deleteClient/:clientId", clientController.deleteClient);
 route.get("/findAll", clientController.findAllClients);
 route.get("/getClient/:clientId", clientController.getClient);
 route.post("/sendDevis", clientController.sendDevis);
+route.post("/verifyPromoCode", clientController.verifyPromoCode);
 
 module.exports = route;

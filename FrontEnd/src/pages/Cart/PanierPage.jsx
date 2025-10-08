@@ -32,7 +32,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createCommande } from "../../services/commande.services";
-import { createClient } from "../../services/client.services";
+import { createClient, verifyPromoCode } from "../../services/client.services";
 
 const PanierPage = () => {
   const location = useLocation();
@@ -141,7 +141,11 @@ const PanierPage = () => {
       const commandeData = {
         client: createdClient.data._id,
         images: selectedImages,
+        montantTotal: parseFloat(total), // Total avec réduction appliquée
+        modePayement: "en_attente",
       };
+
+      console.log("💰 Montant total envoyé:", commandeData.montantTotal);
 
       // Envoyer la commande au backend
       await createCommande(commandeData);
@@ -168,26 +172,40 @@ const PanierPage = () => {
   };
 
   const handleApplyPromo = async () => {
+    console.log("🎯 Début de la vérification du code promo:", promo);
     setPromoError("");
     setPromoApplied(false);
     setReduction(0);
 
+    if (!promo || promo.trim() === "") {
+      setPromoError("Veuillez entrer un code promo");
+      return;
+    }
+
     try {
-      const res = await fetch("/api/checkPromo", {
-        // adapte l'URL à ton backend
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promo }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setReduction(data.reduction); // ex: 10 pour 10%
+      const data = await verifyPromoCode(promo);
+      console.log("📦 Données reçues:", data);
+
+      if (data.success) {
+        console.log("✅ Code promo valide! Réduction:", data.reduction);
+        setReduction(data.reduction);
         setPromoApplied(true);
+        setSuccessMessage(data.message);
+        setShowSuccessMessage(true);
       } else {
+        console.log("⚠️ Code promo invalide");
         setPromoError(data.error || "Code invalide");
       }
-    } catch (e) {
-      setPromoError("Erreur serveur");
+    } catch (error) {
+      console.error("❌ Erreur lors de la vérification du code promo:", error);
+      console.error("Détails de l'erreur:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
+      setPromoError(
+        error.response?.data?.error || "Code promo invalide ou expiré"
+      );
     }
   };
 
@@ -689,6 +707,7 @@ const PanierPage = () => {
                       size="small"
                       value={promo}
                       onChange={(e) => setPromo(e.target.value)}
+                      disabled={promoApplied}
                       sx={{
                         flex: 1,
                         bgcolor: "#fff",
@@ -705,7 +724,9 @@ const PanierPage = () => {
                               disabled={!promo || promoApplied}
                               onClick={handleApplyPromo}
                               sx={{
-                                backgroundColor: "#bdbdbd",
+                                backgroundColor: promoApplied
+                                  ? "#4caf50"
+                                  : "#bdbdbd",
                                 color: "#fff",
                                 fontWeight: "bold",
                                 borderRadius: 1,
@@ -717,16 +738,49 @@ const PanierPage = () => {
                                   md: "0.875rem",
                                 },
                                 px: { xs: 0.5, sm: 1 },
-                                "&:hover": { backgroundColor: "#176B87" },
+                                "&:hover": {
+                                  backgroundColor: promoApplied
+                                    ? "#4caf50"
+                                    : "#176B87",
+                                },
                               }}
                             >
-                              Appliquer
+                              {promoApplied ? "✓ Appliqué" : "Appliquer"}
                             </Button>
                           </InputAdornment>
                         ),
                       }}
                     />
                   </Box>
+                  {promoError && (
+                    <Typography
+                      sx={{ color: "error.main", fontSize: "0.75rem", mt: 1 }}
+                    >
+                      {promoError}
+                    </Typography>
+                  )}
+                  {promoApplied && (
+                    <Box
+                      sx={{
+                        mt: 1,
+                        p: 1,
+                        bgcolor: "#e8f5e9",
+                        borderRadius: 1,
+                        border: "1px solid #4caf50",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: "#2e7d32",
+                          fontSize: "0.75rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        ✓ Code promo appliqué avec succès ! Réduction de{" "}
+                        {reduction}%
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
               </Paper>
               {/* Résumé panier à droite */}
@@ -784,6 +838,20 @@ const PanierPage = () => {
                     </Typography>
                   </Box>
                 </Box>
+                {reduction > 0 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      color: "#4caf50",
+                      fontWeight: "bold",
+                      fontSize: { xs: "0.7rem", sm: "0.8rem", md: "1rem" },
+                    }}
+                  >
+                    <Typography>Réduction ({reduction}%)</Typography>
+                    <Typography>-{reductionMontant.toFixed(2)} Dt</Typography>
+                  </Box>
+                )}
                 <Divider sx={{ my: 0.5 }} />
                 <Box
                   sx={{
@@ -797,23 +865,6 @@ const PanierPage = () => {
                   <Typography>Total</Typography>
                   <Typography>{total} Dt</Typography>
                 </Box>
-                {reduction > 0 && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      color: "green",
-                    }}
-                  >
-                    <Typography>Réduction ({reduction}%)</Typography>
-                    <Typography>-{reductionMontant.toFixed(2)} Dt</Typography>
-                  </Box>
-                )}
-                {promoError && (
-                  <Typography sx={{ color: "red", fontSize: "0.8rem" }}>
-                    {promoError}
-                  </Typography>
-                )}
                 <Box
                   sx={{
                     display: "flex",

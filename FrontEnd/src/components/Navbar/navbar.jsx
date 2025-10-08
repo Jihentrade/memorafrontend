@@ -11,7 +11,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+// import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
@@ -116,9 +116,7 @@ const Navbar = () => {
                 aria-label="shopping cart"
                 sx={{ color: "#000000", padding: "4px" }}
               >
-                <ShoppingCartIcon
-                  sx={{ fontSize: { xs: "1.5rem", sm: "1.75rem" } }}
-                />
+                
               </IconButton>
              
               <IconButton
@@ -190,9 +188,7 @@ const Navbar = () => {
               aria-label="shopping cart"
               sx={{ color: "#000000", padding: "4px" }}
             >
-              <ShoppingCartIcon
-                sx={{ fontSize: { sm: "1.5rem", md: "1.75rem" } }}
-              />
+              
             </IconButton>
             
           </Box>

@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "node server.js",
+    "test-promo": "node testPromoCode.js",
+    "create-promo": "node createPromoCode.js"
   },
   "author": "",
   "license": "ISC",
