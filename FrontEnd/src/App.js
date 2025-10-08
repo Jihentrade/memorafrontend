@@ -9,6 +9,32 @@ import { PersistGate } from "redux-persist/integration/react";
 import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import Toast from "./components/Toast/Toast";
+import { useEffect } from "react";
+import { axiosPublic } from "./utils/axios";
+
+function AppContent() {
+  useEffect(() => {
+    // Appeler la route /hello au chargement du site
+    const checkBackend = async () => {
+      try {
+        const response = await axiosPublic.get("/hello");
+        console.log("✅ Backend connecté:", response.data.message);
+      } catch (error) {
+        console.error("❌ Erreur de connexion au backend:", error.message);
+      }
+    };
+
+    checkBackend();
+  }, []);
+
+  return (
+    <>
+      <CssBaseline />
+      <RouterConfig />
+      <Toast />
+    </>
+  );
+}
 
 function App() {
   const persistor = persistStore(store);
@@ -17,9 +43,7 @@ function App() {
       <HelmetProvider store={store}>
         <PersistGate loading={<LoadingPage />} persistor={persistor}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <RouterConfig />
-            <Toast />
+            <AppContent />
           </ThemeProvider>
         </PersistGate>
       </HelmetProvider>
