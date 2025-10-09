@@ -14,7 +14,7 @@ export const createClient = async (clientData) => {
 
 export const getAllClients = async () => {
   try {
-    const response = await axiosPrivate.get("/client/getAllClients");
+    const response = await axiosPrivate.get("/client/findAll");
     return response.data;
   } catch (error) {
     throw error;

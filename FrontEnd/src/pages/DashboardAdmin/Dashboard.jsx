@@ -43,7 +43,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   //vers la page Clients
   const handleClientClick = () => {
-    navigate("/client");
+    navigate("/clients");
   };
   //vers la page Produit
   const handleProduitClick = () => {

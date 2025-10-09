@@ -11,15 +11,15 @@ import FridgePreview from "../pages/FridgePreview";
 import Cart from "../pages/Cart/PanierPage";
 import AvisClient from "../pages/AvisClient/AvisClientsPage";
 import CommandesAdmin from "../pages/CommandesAdmin";
+import ClientsAdmin from "../pages/ClientsAdmin";
 const RouterConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
-      
-    
         <Route path="/" element={<Accueil />} />
         <Route path="/dashboardAdmin" element={<Dashboard />} />
         <Route path="/commandes" element={<CommandesAdmin />} />
+        <Route path="/clients" element={<ClientsAdmin />} />
         <Route path="/fridge-preview" element={<FridgePreview />} />
         <Route path="/panier" element={<Cart />} />
         <Route path="/avis-clients" element={<AvisClient />} />

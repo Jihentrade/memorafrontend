@@ -43,6 +43,11 @@ const CommandesAdmin = () => {
   const [commandeToDelete, setCommandeToDelete] = useState(null);
 
   useEffect(() => {
+    console.log("=== Configuration CommandesAdmin ===");
+    console.log("🌐 BASE_URL:", BASE_URL);
+    console.log("🔧 NODE_ENV:", process.env.NODE_ENV);
+    console.log("📦 VERCEL:", process.env.VERCEL);
+    console.log("====================================");
     fetchCommandes();
   }, []);
 
@@ -63,6 +68,13 @@ const CommandesAdmin = () => {
     try {
       setLoading(true);
       const response = await getAllCommandes();
+      console.log("📦 Commandes chargées:", response.commandes?.length || 0);
+      if (response.commandes && response.commandes.length > 0) {
+        console.log("🖼️ Exemple de commande avec images:", {
+          numeroCommande: response.commandes[0].numeroCommande,
+          images: response.commandes[0].images,
+        });
+      }
       setCommandes(response.commandes || []);
       setError(null);
     } catch (error) {
@@ -137,15 +149,26 @@ const CommandesAdmin = () => {
 
   // Helper pour construire l'URL correcte de l'image
   const getImageUrl = (imagePath) => {
-    if (!imagePath) return "";
-    // Si le chemin commence par "uploads/", l'utiliser tel quel
-    // Sinon, ajouter "uploads/" au début
-    const path = imagePath.startsWith("uploads/")
-      ? imagePath
-      : `uploads/${imagePath}`;
-    // Enlever le slash final de BASE_URL s'il existe pour éviter les doubles slashes
+    if (!imagePath) {
+      console.log("❌ getImageUrl: imagePath vide");
+      return "";
+    }
+
+    console.log("🖼️ getImageUrl - imagePath reçu:", imagePath);
+    console.log("🌐 BASE_URL:", BASE_URL);
+
+    let cleanPath = imagePath;
+    if (cleanPath.startsWith("uploads/")) {
+      cleanPath = cleanPath.substring(8);
+    } else if (cleanPath.startsWith("/uploads/")) {
+      cleanPath = cleanPath.substring(9);
+    }
+
     const baseUrl = BASE_URL.endsWith("/") ? BASE_URL.slice(0, -1) : BASE_URL;
-    return `${baseUrl}/${path}`;
+    const finalUrl = `${baseUrl}/uploads/${cleanPath}`;
+
+    console.log("✅ URL finale construite:", finalUrl);
+    return finalUrl;
   };
 
   const openImageInNewTab = (imagePath, index) => {
@@ -608,26 +631,38 @@ const CommandesAdmin = () => {
                               objectFit: "cover",
                             }}
                             onError={(e) => {
+                              const imageUrl = getImageUrl(imagePath);
                               console.error(
-                                "Erreur de chargement de l'image:",
-                                imagePath
+                                "❌ Erreur de chargement de l'image"
                               );
+                              console.error("📁 Chemin original:", imagePath);
+                              console.error("🔗 URL construite:", imageUrl);
+                              console.error("🌐 BASE_URL actuelle:", BASE_URL);
+                              console.error("🔧 Environnement:", {
+                                NODE_ENV: process.env.NODE_ENV,
+                                VERCEL: process.env.VERCEL,
+                              });
+
                               e.target.style.display = "none";
-                              // Afficher un placeholder
                               const placeholder = e.target.parentElement;
                               placeholder.innerHTML = `
                                 <div style="
                                   display: flex;
+                                  flex-direction: column;
                                   align-items: center;
                                   justify-content: center;
                                   height: 100%;
-                                  background-color: #f5f5f5;
-                                  color: #666;
-                                  font-size: 12px;
+                                  background-color: #ffebee;
+                                  color: #c62828;
+                                  font-size: 11px;
                                   text-align: center;
+                                  padding: 5px;
                                 ">
-                                  Image ${index + 1}<br/>
-                                  <small>Erreur de chargement</small>
+                                  <div style="font-weight: bold; margin-bottom: 4px;">Image ${
+                                    index + 1
+                                  }</div>
+                                  <div style="font-size: 10px; color: #d32f2f;">Erreur de chargement</div>
+                                  <div style="font-size: 9px; color: #999; margin-top: 4px; word-break: break-all;">${imagePath}</div>
                                 </div>
                               `;
                             }}
