@@ -155,6 +155,12 @@ const CommandesAdmin = () => {
     }
 
     console.log("🖼️ getImageUrl - imagePath reçu:", imagePath);
+
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+      console.log("✅ URL Cloudinary:", imagePath);
+      return imagePath;
+    }
+
     console.log("🌐 BASE_URL:", BASE_URL);
 
     let cleanPath = imagePath;
@@ -167,7 +173,7 @@ const CommandesAdmin = () => {
     const baseUrl = BASE_URL.endsWith("/") ? BASE_URL.slice(0, -1) : BASE_URL;
     const finalUrl = `${baseUrl}/uploads/${cleanPath}`;
 
-    console.log("✅ URL finale construite:", finalUrl);
+    console.log("✅ URL locale construite:", finalUrl);
     return finalUrl;
   };
 

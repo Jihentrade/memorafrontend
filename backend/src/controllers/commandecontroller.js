@@ -27,8 +27,17 @@ const createCommande = async (req, res) => {
       }
 
       // Images optionnelles - stocker uniquement le nom du fichier
+      const isProduction =
+        process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
+
       const imagePaths = req.files
-        ? req.files.map((file) => file.filename)
+        ? req.files.map((file) => {
+            if (isProduction) {
+              return file.path;
+            } else {
+              return file.filename;
+            }
+          })
         : [];
       console.log("🖼️ Images sauvegardées:", imagePaths);
 
