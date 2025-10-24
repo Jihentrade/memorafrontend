@@ -14,13 +14,16 @@ import { axiosPublic } from "./utils/axios";
 
 function AppContent() {
   useEffect(() => {
-    // Appeler la route /hello au chargement du site
     const checkBackend = async () => {
       try {
         const response = await axiosPublic.get("/hello");
-        console.log("✅ Backend connecté:", response.data.message);
+        if (process.env.NODE_ENV === "development") {
+          console.log("✅ Backend connecté:", response.data.message);
+        }
       } catch (error) {
-        console.error("❌ Erreur de connexion au backend:", error.message);
+        if (process.env.NODE_ENV === "development") {
+          console.error("❌ Erreur de connexion au backend:", error.message);
+        }
       }
     };
 

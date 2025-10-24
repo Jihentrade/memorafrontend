@@ -1,106 +1,4 @@
-// import React from "react";
-// import { Button, Grid, TextField, Typography } from "@mui/material";
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { AjoutClientValidation } from "../../utils/validation";
-// import Navbar from "../Navbar/navbar";
-// import "./contactus.css";
-// import Footer from "../footer/footer";
 
-// const Signup = () => {
-//   const {
-//     control,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm({
-//     defaultValues: {
-//       name: "",
-//       email: "", // Ajout du champ email avec une valeur par défaut vide
-//       message: "",
-//     },
-//     // resolver: yupResolver(AjoutClientValidation),
-//   });
-
-//   const onSubmit = (data) => {
-//     // Logique de soumission du formulaire ici
-//     console.log(data);
-//   };
-
-//   return (
-//     <div>
-//       <Navbar />
-//       <Grid
-//         container
-//         justifyContent="center"
-//         alignItems="center"
-//         className="login-container"
-//       >
-//         <Grid item xs={12} sm={8} md={6} lg={4} xl={3} className="login-box">
-//           <Typography variant="h5" className="login-title">
-//             Contactez-nous
-//           </Typography>
-//           <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-//             <Grid container spacing={0.5}>
-//               <Grid item xs={12}>
-//                 <TextField
-//                   fullWidth
-//                   label="Votre nom"
-//                   name="name"
-//                   control={control}
-//                   margin="normal"
-//                 />
-//                 {errors.name && (
-//                   <Typography color="error">{errors.name.message}</Typography>
-//                 )}
-//               </Grid>
-//               <Grid item xs={12}>
-//                 <TextField
-//                   fullWidth
-//                   label="Votre email"
-//                   name="email"
-//                   type="email"
-//                   control={control}
-//                   margin="normal"
-//                 />
-//                 {errors.email && (
-//                   <Typography color="error">{errors.email.message}</Typography>
-//                 )}
-//               </Grid>
-//               <Grid item xs={12}>
-//                 <TextField
-//                   fullWidth
-//                   label="Message"
-//                   name="message"
-//                   control={control}
-//                   margin="normal"
-//                   multiline
-//                   rows="5"
-//                 />
-//                 {errors.message && (
-//                   <Typography color="error">
-//                     {errors.message.message}
-//                   </Typography>
-//                 )}
-//               </Grid>
-//             </Grid>
-//             <Button
-//               variant="contained"
-//               color="primary"
-//               type="submit"
-//               fullWidth
-//               style={{ marginTop: 20 }}
-//             >
-//               Envoyer
-//             </Button>
-//           </form>
-//         </Grid>
-//       </Grid>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Signup;
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
@@ -173,7 +71,7 @@ const ContactUsPage = () => {
     {
       icon: <EmailIcon sx={{ color: "#176B87", fontSize: 40 }} />,
       title: "Email",
-      content: "contact@votre-site.com",
+      content: "memorajt@gmail.com",
       description: "Réponse sous 24h",
     },
     {

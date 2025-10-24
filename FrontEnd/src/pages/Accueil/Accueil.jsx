@@ -7,6 +7,11 @@ import AboutUs from "../../components/AboutUs/aboutUs";
 import Service from "../../components/Serviice/Services";
 import HowToWork from "../../components/HowItWorks";
 import ThreeByTwoGrid from "../../components/ThreeByTwoGrid/ThreeByTwoGrid";
+import SEO from "../../components/SEO";
+import {
+  getOrganizationSchema,
+  getWebSiteSchema,
+} from "../../utils/structuredData";
 
 // Import des images
 import customerImage1 from "../../assets/1.jpg";
@@ -42,8 +47,22 @@ const Accueil = () => {
     navigate("/aimants-photo-carrés");
   };
 
+  const organizationSchema = getOrganizationSchema();
+  const websiteSchema = getWebSiteSchema();
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [organizationSchema, websiteSchema],
+  };
+
   return (
     <div className="container">
+      <SEO
+        title="Memora Magnet - Magnets Personnalisés de Qualité Premium | Créez vos Magnets Photo"
+        description="Créez vos magnets personnalisés avec vos photos préférées. Service rapide, qualité premium, livraison en 72h. Plus de 100 magnets créés, clients 100% satisfaits."
+        keywords="magnets personnalisés, magnets photo, aimants personnalisés, magnets réfrigérateur, magnets sur mesure, impression magnets, memora, cadeaux personnalisés, décoration réfrigérateur, souvenirs photo"
+        canonicalUrl="/"
+        structuredData={combinedSchema}
+      />
       <Navbar />
 
       {/* Nouvelle section Hero avec image entière et bouton */}

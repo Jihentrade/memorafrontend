@@ -44,12 +44,14 @@ const authRouter = require("./src/routers/authRouter");
 const adminRouter = require("./src/routers/adminRouter");
 const clientRouter = require("./src/routers/clientRouter");
 const reductionRouter = require("./src/routers/ReductionRouter");
+const diagnosticRouter = require("./src/routers/diagnosticRouter");
 
 app.use("/admin", adminRouter);
 app.use("/commande", commandeRouter);
 app.use("/client", clientRouter);
 app.use("/reduction", reductionRouter);
 app.use("/auth", authRouter);
+app.use("/diagnostic", diagnosticRouter);
 //**************************************************************************** */
 
 // Export de l'application (le serveur sera démarré par server.js ou bin/www)
