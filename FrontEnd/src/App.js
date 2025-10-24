@@ -17,13 +17,9 @@ function AppContent() {
     const checkBackend = async () => {
       try {
         const response = await axiosPublic.get("/hello");
-        if (process.env.NODE_ENV === "development") {
-          console.log("✅ Backend connecté:", response.data.message);
-        }
+        console.log("✅ Backend connecté:", response.data.message);
       } catch (error) {
-        if (process.env.NODE_ENV === "development") {
-          console.error("❌ Erreur de connexion au backend:", error.message);
-        }
+        console.error("❌ Erreur de connexion au backend:", error.message);
       }
     };
 
